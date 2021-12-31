@@ -5,6 +5,17 @@ import numpy as np
 cap = cv2.VideoCapture("test2.mp4")
 
 
+def region_of_interest(image):
+    # return the height of the image
+    height = image.shape[0]
+    # set region vertices
+    triangle = np.array([[(200, height), (1100, height), (550, 250)]])
+    # Return an array of zeros with the same shape and type as a given array
+    mask = np.zeros_like(image)
+    # fill the black mask with the region triangle
+    cv2.fillPoly(mask, triangle, 255)
+
+    return mask
 
 
 def detect_lane(image):
@@ -12,7 +23,9 @@ def detect_lane(image):
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     # apply canny function on the grayscale image
     canny = cv2.Canny(gray, 50, 150)
-    return canny
+    # define the interest region
+    cropped_image = region_of_interest(canny)
+    return cropped_image
 
 
 # show the ouptut video
