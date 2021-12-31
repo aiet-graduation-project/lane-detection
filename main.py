@@ -14,8 +14,9 @@ def region_of_interest(image):
     mask = np.zeros_like(image)
     # fill the black mask with the region triangle
     cv2.fillPoly(mask, triangle, 255)
-
-    return mask
+    # apply and on the mask image to crop the region of interest only
+    masked_image = cv2.bitwise_and(image, mask)
+    return masked_image
 
 
 def detect_lane(image):
