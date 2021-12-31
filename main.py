@@ -5,10 +5,14 @@ import numpy as np
 cap = cv2.VideoCapture("test2.mp4")
 
 
+
+
 def detect_lane(image):
     # convert current frame into grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    return gray
+    # apply canny function on the grayscale image
+    canny = cv2.Canny(gray, 50, 150)
+    return canny
 
 
 # show the ouptut video
